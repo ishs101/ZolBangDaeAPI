@@ -68,7 +68,7 @@ app.get('/register', function (req, res) {
     const _class = q.class;
     const password = q.password;
 
-    connection.query('UPDATE ' + id + ' SET class='+ _class + ', password=' + password + ' WHERE stunum=' + stunum, function (err, result) {
+    connection.query('UPDATE ' + id + ' SET class='+ _class + ' WHERE stunum=' + stunum, function (err, result) {
         if (err) throw err;
         console.log(result);
         res.json(result);
@@ -80,7 +80,7 @@ app.get('/remove', function (req, res) {
     const id = q.id;
     const stunum = q.stunum;
     if(password == checkpassword) {
-        connection.query('UPDATE ' + id + ' SET class=0, password=0 WHERE stunum=' + stunum, function (err2, result2) {
+        connection.query('UPDATE ' + id + ' SET class=0 WHERE stunum=' + stunum, function (err2, result2) {
             if (err2) throw err2;
             console.log(result2);
             res.json(result2);
