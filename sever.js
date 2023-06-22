@@ -79,16 +79,11 @@ app.get('/remove', function (req, res) {
     const q = req.query;
     const id = q.id;
     const stunum = q.stunum;
-    if(password == checkpassword) {
-        connection.query('UPDATE ' + id + ' SET class=0 WHERE stunum=' + stunum, function (err2, result2) {
-            if (err2) throw err2;
-            console.log(result2);
-            res.json(result2);
-        });
-    }
-    else {
-        res.json('error')
-    }
+    connection.query('UPDATE ' + id + ' SET class=0 WHERE stunum=' + stunum, function (err2, result2) {
+        if (err2) throw err2;
+        console.log(result2);
+        res.json(result2);
+    });
 });
 
 app.get('/pw', function (req, res) {
