@@ -104,9 +104,9 @@ app.get('/pw', function (req, res) {
     });
 });
 
-app.get('/', function (req, res) {
-    const param = req.params;
-    if(param == 'reset') {
+app.get('/reset', function (req, res) {
+    const bool = req.query.bool;
+    if(bool == 'true') {
         for(let i=1; i<=4; i++) {
             connection.query('UPDATE zol' + i + 'class=0', function (err, result) {
                 if(err) throw err;
@@ -114,6 +114,9 @@ app.get('/', function (req, res) {
                 res.json('success');
             })
         }
+    }
+    else {
+        res.json('fail');
     }
 })
 
