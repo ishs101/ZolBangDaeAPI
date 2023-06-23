@@ -108,7 +108,7 @@ app.get('/reset', function (req, res) {
     const bool = req.query.bool;
     if(bool == 'true') {
         for(let i=1; i<=4; i++) {
-            connection.query('UPDATE zol' + i + 'class=0', function (err, result) {
+            connection.query('UPDATE zol' + i + ' SET class=0', function (err, result) {
                 if(err) throw err;
                 console.log(result);
                 res.json('success');
