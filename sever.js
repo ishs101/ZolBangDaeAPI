@@ -18,10 +18,13 @@ connection.connect(function (err) {
     }
     else {
         console.log("Connected!");
-        connection.query("SELECT * FROM zol1", function(err, res) {
-            if (err) throw err;
-            console.log(res);
-        })
+        for(let i=1; i<=4; i++) {
+            connection.query("SELECT * FROM zol" + i, function(err, res) {
+                if (err) throw err;
+                console.log('zol' + i);
+                console.log(res);
+            })
+        }
     }
 });
 
@@ -66,12 +69,11 @@ app.get('/register', function (req, res) {
     const id = q.id;
     const stunum = q.stunum;
     const _class = q.class;
-    const password = q.password;
 
     connection.query('UPDATE ' + id + ' SET class='+ _class + ' WHERE stunum=' + stunum, function (err, result) {
         if (err) throw err;
         console.log(result);
-        res.json(result);
+        res.json('success');
     });
 });
 
@@ -79,10 +81,10 @@ app.get('/remove', function (req, res) {
     const q = req.query;
     const id = q.id;
     const stunum = q.stunum;
-    connection.query('UPDATE ' + id + ' SET class=0 WHERE stunum=' + stunum, function (err2, result2) {
-        if (err2) throw err2;
-        console.log(result2);
-        res.json(result2);
+    connection.query('UPDATE ' + id + ' SET class=0 WHERE stunum=' + stunum, function (err, result) {
+        if (err) throw err;
+        console.log(result);
+        res.json('success');
     });
 });
 
@@ -102,15 +104,17 @@ app.get('/pw', function (req, res) {
     });
 });
 
-app.get('/reset', function (req, res) {
-    for(let i=1; i<=5; i++) {
-        connection.query('UPDATE zol' + i + 'class=0', function (err, result) {
-            if(err) throw err;
-            console.log(result);
-            res.json('success');
-        })
+app.get('/', function (req, res) {
+    const param = req.params;
+    if(param == 'reset') {
+        for(let i=1; i<=4; i++) {
+            connection.query('UPDATE zol' + i + 'class=0', function (err, result) {
+                if(err) throw err;
+                console.log(result);
+                res.json('success');
+            })
+        }
     }
-    
 })
 
 app.listen(3000);
