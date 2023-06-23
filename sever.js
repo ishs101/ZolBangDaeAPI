@@ -102,4 +102,15 @@ app.get('/pw', function (req, res) {
     });
 });
 
+app.get('/reset', function (req, res) {
+    for(let i=1; i<=5; i++) {
+        connection.query('UPDATE zol' + i + 'class=0', function (err, result) {
+            if(err) throw err;
+            console.log(result);
+            res.json('success');
+        })
+    }
+    
+})
+
 app.listen(3000);
