@@ -107,13 +107,27 @@ app.get('/pw', function (req, res) {
 app.get('/reset', function (req, res) {
     const bool = req.query.bool;
     if(bool == 'true') {
-        for(let i=1; i<=4; i++) {
-            connection.query('UPDATE zol' + i + ' SET class=0', function (err, result) {
-                if(err) throw err;
-                console.log(result);
-                res.json('success');
-            })
+        var time = new Date();
+        var hours = ('0' + time.getHours()).slice(-2);
+        var minutes = ('0' + time.getMinutes()).slice(-2);
+        var seconds = ('0' + time.getSeconds()).slice(-2);
+
+        var timeString = hours + ':' + minutes + ':' + seconds;
+        console.log(timeString);
+        if(timeString == '0:0:0') { 
+            for(let i=1; i<=4; i++) {
+                connection.query('UPDATE zol' + i + ' SET class=0', function (err, result) {
+                    if(err) throw err;
+                    console.log(result);
+                    res.json('success');
+                })
+            }
         }
+        else {
+            console.log('fail because of time')
+            res.json('fail because it doesn\'t not in time')
+        }
+
     }
     else {
         res.json('fail');
