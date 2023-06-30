@@ -103,7 +103,7 @@ app.get('/pw', function (req, res) {
             console.log('success make cookie');
         }
         else if(String(password) != result[0].password) { 
-            res.json('incorrect_password');
+            res.cookie('loginID', 'incorrect_id');
         }
         else {
             res.json('error');
