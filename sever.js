@@ -1,9 +1,12 @@
 const mysql = require('mysql2');
 const express = require("express");
 var cors = require('cors');
+const cookieParser = require('cookie-parser');
 const app = express();
 
 app.use(cors());
+app.use(cookieParser());
+
 
 const connection = mysql.createConnection({
     host: '210.114.22.146',
@@ -96,10 +99,14 @@ app.get('/pw', function (req, res) {
     connection.query('SELECT * FROM user WHERE stunum=' + stunum, function (err, result) {
         if(err) throw err;
         else if(String(password) == result[0].password) {
-            res.json('success');
+            res.cookie('loginID', stunum);
+            console.log('success make cookie');
         }
         else if(String(password) != result[0].password) { 
             res.json('incorrect_password');
+        }
+        else {
+            res.json('error');
         }
     });
 });
